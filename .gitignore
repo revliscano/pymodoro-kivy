@@ -1,0 +1,5 @@
+pymodoro.sublime-project
+pymodoro.sublime-workspace
+venv/
+*.pyc
+__pycache__/
