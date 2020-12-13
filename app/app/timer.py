@@ -1,4 +1,5 @@
 import time
+from collections import namedtuple
 
 
 class Timer:
@@ -14,6 +15,17 @@ class Timer:
         return self._current_time
 
 
+PomodoroClockConfiguration = namedtuple(
+    typename='PomodoroClockConfiguration',
+    field_names=[
+        'pomodoro_duration',
+        'break_duration',
+        'long_break_duration',
+        'long_break_after'
+    ]
+)
+
+
 class PomodoroClock:
     def __init__(self, timer, configuration):
         self.timer = timer
@@ -25,24 +37,24 @@ class PomodoroClock:
         lapse = self.get_next_lapse()
         self.timer.run(lapse)
         self.previous_lapse = lapse
-        if lapse == self.configuration['pomodoro_duration']:
+        if lapse == self.configuration.pomodoro_duration:
             self.pomodoros_count += 1
 
     def get_next_lapse(self):
         if self._just_finished_a_pomodoro():
             return (
-                self.configuration['long_break_duration']
+                self.configuration.long_break_duration
                 if self._its_time_for_long_break()
-                else self.configuration['break_duration']
+                else self.configuration.break_duration
             )
-        return self.configuration['pomodoro_duration']
+        return self.configuration.pomodoro_duration
 
     def _just_finished_a_pomodoro(self):
         return (
-            self.previous_lapse == self.configuration['pomodoro_duration']
+            self.previous_lapse == self.configuration.pomodoro_duration
         )
 
     def _its_time_for_long_break(self):
         return (
-            self.pomodoros_count % self.configuration['long_break_after'] == 0
+            self.pomodoros_count % self.configuration.long_break_after == 0
         )
