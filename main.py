@@ -1,7 +1,7 @@
 from kivy.app import App
 
 from app.settings import setup
-from app.GUI.root import Root
+from app.GUI.widgets import Root
 
 
 class PymodoroApp(App):

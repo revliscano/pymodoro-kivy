@@ -1,15 +1,23 @@
-import time
+from time import time
 from collections import namedtuple
 
 
 class Timer:
+    TIME_MODULE = 0.00001
+
     def __init__(self):
         self._current_time = 0
 
     def run(self, seconds):
         while self._current_time < seconds:
-            time.sleep(1)
+            self._update_current_time()
+
+    def _update_current_time(self):
+        if self._has_passed_one_second():
             self._current_time += 1
+
+    def _has_passed_one_second(self):
+        return self.TIME_MODULE > time() % 1
 
     def get_current_time(self):
         return self._current_time
