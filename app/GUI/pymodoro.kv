@@ -4,16 +4,29 @@
         center_x: root.width / 2
         top: root.top - 10
         text: "PYMODORO"
-    Label:
-        font_size: 40
-        center_x: root.width / 2
-        top: root.top - 80
-        text: "00:00"
-    Button:
+    GridLayout:
+    	cols: 3
+    	center_x: root.width / 2
+    	top: root.top - 80
+    	width: 220
+
+	    TimerLabel:
+	        font_size: 40
+	        text: "00:00"
+
+	    Label:
+	        text: "/"
+	        font_size: 20
+
+	    UpToLabel:
+	        font_size: 40
+	        text: str(root.pomodoro_counter.next_lapse) + ':00'
+
+    StartNextLapse:
     	font_size: 20
-    	text: "START"
+    	text: "START NEXT"
     	color: (0, 0, 0, 1)
     	background_color: (255, 255, 255, 1)
     	top: root.top - 160
     	center_x: root.width / 2
-    	size: 70, 30
+    	size: 150, 30
