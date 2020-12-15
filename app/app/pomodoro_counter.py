@@ -51,3 +51,7 @@ class PomodoroCounter:
         self.current_lapse = self.next_lapse
         if self._just_finished_a_pomodoro():
             self.pomodoros_count += 1
+
+    def get_count(self):
+        return self.pomodoros_count
+
