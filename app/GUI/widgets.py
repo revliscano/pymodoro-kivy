@@ -3,6 +3,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.properties import ObjectProperty, NumericProperty
 from kivy.clock import Clock
+from .seconds_formatter import SecondsFormatter
 
 
 EVERY_SECOND = 1
@@ -30,7 +31,7 @@ class Root(Widget):
 
     def run_timer(self, event):
         self.seconds_elapsed += 1
-        self.ids.timer_label.refresh_text()
+        self.ids.timer_label.refresh_text(self.seconds_elapsed)
         if self.is_lapse_done():
             self.finish_pomodoro()
 
@@ -48,7 +49,7 @@ class UpToLabel(Label):
         self.update(pomodoro_length)
 
     def update(self, next_lapse):
-        self.text = str(next_lapse)
+        self.text = str(SecondsFormatter(next_lapse))
 
 
 class TimerLabel(Label):
@@ -56,11 +57,10 @@ class TimerLabel(Label):
         self.bring_back_to_zero()
 
     def bring_back_to_zero(self):
-        self.text = '0'
+        self.text = str(SecondsFormatter(0))
 
-    def refresh_text(self):
-        value = int(self.text)
-        self.text = str(value + 1)
+    def refresh_text(self, seconds):
+        self.text = str(SecondsFormatter(seconds))
 
 
 class StartNextLapse(Button):

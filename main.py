@@ -3,7 +3,7 @@ from kivy.app import App
 from app.settings import setup
 from app.GUI.widgets import Root
 from app.app.pomodoro_counter import (
-    PomodoroCounter, PomodoroCounterConfiguration
+    PomodoroCounter, PomodoroCounterConfiguration, DEFAULT_CONFIGURATION
 )
 
 

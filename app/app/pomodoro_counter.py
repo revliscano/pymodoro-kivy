@@ -1,4 +1,10 @@
 from collections import namedtuple
+from enum import IntEnum
+
+
+class Units(IntEnum):
+    MINUTES = 60
+    POMODOROS = 1
 
 
 PomodoroCounterConfiguration = namedtuple(
@@ -11,12 +17,11 @@ PomodoroCounterConfiguration = namedtuple(
     ]
 )
 
-MINUTES = 60
 DEFAULT_CONFIGURATION = PomodoroCounterConfiguration(
-    pomodoro_duration=25 * MINUTES,
-    break_duration=5 * MINUTES,
-    long_break_duration=20 * MINUTES,
-    long_break_after=4
+    pomodoro_duration=25 * Units.MINUTES,
+    break_duration=5 * Units.MINUTES,
+    long_break_duration=20 * Units.MINUTES,
+    long_break_after=4 * Units.POMODOROS
 )
 
 
