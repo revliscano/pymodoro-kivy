@@ -11,10 +11,11 @@ PomodoroCounterConfiguration = namedtuple(
     ]
 )
 
+MINUTES = 60
 DEFAULT_CONFIGURATION = PomodoroCounterConfiguration(
-    pomodoro_duration=25,
-    break_duration=5,
-    long_break_duration=20,
+    pomodoro_duration=25 * MINUTES,
+    break_duration=5 * MINUTES,
+    long_break_duration=20 * MINUTES,
     long_break_after=4
 )
 
@@ -54,4 +55,3 @@ class PomodoroCounter:
 
     def get_count(self):
         return self.pomodoros_count
-

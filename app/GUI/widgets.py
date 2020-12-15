@@ -1,34 +1,66 @@
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-from kivy.properties import ObjectProperty, BooleanProperty
+from kivy.properties import ObjectProperty, NumericProperty
 from kivy.clock import Clock
+
+
+EVERY_SECOND = 1
 
 
 class Root(Widget):
     pomodoro_counter = ObjectProperty()
-    running = BooleanProperty(defaultvalue=False)
+    timer = ObjectProperty()
+    seconds_elapsed = NumericProperty(defaultvalue=0)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def start_pomodoro(self, event):
-        Clock.schedule_once(
-            self.finish_pomodoro,
-            self.pomodoro_counter.next_lapse
+        self.restart()
+        self.timer = Clock.schedule_interval(
+            self.run_timer,
+            EVERY_SECOND
         )
 
-    def finish_pomodoro(self, event):
+    def restart(self):
+        self.seconds_elapsed = 0
+        self.ids.timer_label.bring_back_to_zero()
+        self.ids.up_to_label.update(self.pomodoro_counter.next_lapse)
+
+    def run_timer(self, event):
+        self.seconds_elapsed += 1
+        self.ids.timer_label.refresh_text()
+        if self.is_lapse_done():
+            self.finish_pomodoro()
+
+    def is_lapse_done(self):
+        return self.seconds_elapsed == self.pomodoro_counter.next_lapse
+
+    def finish_pomodoro(self):
+        Clock.unschedule(self.timer)
         self.pomodoro_counter.update_after_lapse_ends()
-        self.running = False
 
 
 class UpToLabel(Label):
-    pass
+    def on_parent(self, obj, parent):
+        pomodoro_length = self.parent.parent.pomodoro_counter.next_lapse
+        self.update(pomodoro_length)
+
+    def update(self, next_lapse):
+        self.text = str(next_lapse)
 
 
 class TimerLabel(Label):
-    pass
+    def on_parent(self, obj, parent):
+        self.bring_back_to_zero()
+
+    def bring_back_to_zero(self):
+        self.text = '0'
+
+    def refresh_text(self):
+        value = int(self.text)
+        self.text = str(value + 1)
 
 
 class StartNextLapse(Button):
