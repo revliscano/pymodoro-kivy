@@ -11,13 +11,15 @@ EVERY_SECOND = 1
 
 class Root(Widget):
     pomodoro_counter = ObjectProperty()
+    tictoc_sound = ObjectProperty()
+    beep_sound = ObjectProperty()
     timer = ObjectProperty()
     seconds_elapsed = NumericProperty(defaultvalue=0)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def start_pomodoro(self, event):
+    def start_lapse(self, event):
         self.restart()
         self.switch_buttons()
         self.timer = Clock.schedule_interval(
@@ -38,13 +40,15 @@ class Root(Widget):
         self.seconds_elapsed += 1
         self.ids.timer_label.refresh_text(self.seconds_elapsed)
         if self.is_lapse_done():
-            self.finish_pomodoro()
+            self.finish_lapse()
 
     def is_lapse_done(self):
         return self.seconds_elapsed == self.pomodoro_counter.next_lapse
 
-    def finish_pomodoro(self):
+    def finish_lapse(self):
+        self.beep_sound.play()
         self.pomodoro_counter.update_after_lapse_ends()
+        self.ids.counter_label.update(self.pomodoro_counter.get_count())
         self.tear_down()
 
     def tear_down(self):
@@ -58,8 +62,8 @@ class Root(Widget):
 
 class UpToLabel(Label):
     def on_parent(self, obj, parent):
-        pomodoro_length = self.parent.parent.pomodoro_counter.next_lapse
-        self.update(pomodoro_length)
+        lapse_duration = self.parent.parent.pomodoro_counter.next_lapse
+        self.update(lapse_duration)
 
     def update(self, next_lapse):
         self.text = str(SecondsFormatter(next_lapse))
@@ -83,9 +87,14 @@ class Switchable:
 
 class StartNextLapse(Button, Switchable):
     def on_parent(self, obj, parent):
-        self.bind(on_press=parent.start_pomodoro)
+        self.bind(on_press=parent.start_lapse)
 
 
 class AbortLapse(Button, Switchable):
     def on_parent(self, obj, parent):
         self.bind(on_press=parent.abort_lapse)
+
+
+class Counter(Label):
+    def update(self, count):
+        self.text = str(count)

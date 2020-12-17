@@ -5,7 +5,8 @@ from kivy.lang import Builder
 OS_SETTINGS = {
     'KIVY_TEXT': 'pil'
 }
-KV_PATH = 'app/GUI/pymodoro.kv'
+ASSETS_PATH = 'app/assets'
+KV_PATH = 'app/ui/pymodoro.kv'
 
 
 def setup():

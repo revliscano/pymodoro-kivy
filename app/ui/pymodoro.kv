@@ -33,8 +33,8 @@
     	size: 150, 30
 
     AbortLapse:
-        disabled: True
         id: abort_lapse_button
+        disabled: True
         font_size: 20
         text: "ABORT"
         color: (0, 0, 0, 1)
@@ -42,3 +42,13 @@
         top: root.top - 200
         center_x: root.width / 2
         size: 150, 30
+    Label:
+        font_size: 20
+        text: "Completed so far: "
+        center_x: root.width / 2
+
+    Counter:
+        id: counter_label
+        font_size: 20
+        text: "0"
+        center_x: root.width / 2 + 90

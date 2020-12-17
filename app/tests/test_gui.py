@@ -1,6 +1,6 @@
 import unittest
 
-from app.GUI.seconds_formatter import SecondsFormatter
+from app.ui.seconds_formatter import SecondsFormatter
 
 
 class NumberFormatterTestCase(unittest.TestCase):
