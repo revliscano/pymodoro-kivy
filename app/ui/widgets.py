@@ -22,6 +22,7 @@ class Root(Widget):
     def start_lapse(self, event):
         self.restart()
         self.switch_buttons()
+        self.tictoc_sound.play()
         self.timer = Clock.schedule_interval(
             self.run_timer,
             EVERY_SECOND
@@ -35,6 +36,7 @@ class Root(Widget):
     def switch_buttons(self):
         self.ids.start_next_lapse_button.switch()
         self.ids.abort_lapse_button.switch()
+        self.ids.skip_lapse_button.switch()
 
     def run_timer(self, event):
         self.seconds_elapsed += 1
@@ -53,10 +55,16 @@ class Root(Widget):
 
     def tear_down(self):
         Clock.unschedule(self.timer)
+        self.tictoc_sound.stop()
         self.switch_buttons()
 
     def abort_lapse(self, event):
         self.tear_down()
+        self.restart()
+
+    def skip_lapse(self, event):
+        self.pomodoro_counter.update_after_lapse_ends()
+        self.ids.counter_label.update(self.pomodoro_counter.get_count())
         self.restart()
 
 
@@ -93,6 +101,11 @@ class StartNextLapse(Button, Switchable):
 class AbortLapse(Button, Switchable):
     def on_parent(self, obj, parent):
         self.bind(on_press=parent.abort_lapse)
+
+
+class SkipLapse(Button, Switchable):
+    def on_parent(self, obj, parent):
+        self.bind(on_press=parent.skip_lapse)
 
 
 class Counter(Label):
