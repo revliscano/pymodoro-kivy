@@ -2,12 +2,12 @@
     Label:
         font_size: 40
         center_x: root.width / 2
-        top: root.top - 10
+        top: root.top - 30
         text: "PYMODORO"
     GridLayout:
     	cols: 3
     	center_x: root.width / 2
-    	top: root.top - 80
+    	top: root.top - 100
     	width: 220
 
 	    TimerLabel:
@@ -28,7 +28,7 @@
     	text: "START NEXT"
     	color: (0, 0, 0, 1)
     	background_color: (255, 255, 255, 1)
-    	top: root.top - 160
+    	top: root.top - 180
     	center_x: root.width / 2
     	size: 150, 30
 
@@ -39,7 +39,7 @@
         text: "ABORT"
         color: (0, 0, 0, 1)
         background_color: (255, 255, 255, 1)
-        top: root.top - 200
+        top: root.top - 220
         center_x: root.width / 2
         size: 150, 30
 
@@ -49,7 +49,7 @@
         text: "SKIP"
         color: (0, 0, 0, 1)
         background_color: (255, 255, 255, 1)
-        top: root.top - 240
+        top: root.top - 260
         center_x: root.width / 2
         size: 150, 30
 
@@ -63,3 +63,13 @@
         font_size: 20
         text: "0"
         center_x: root.width / 2 + 90
+
+    QuitSession:
+        id: quit_session_button
+        font_size: 15
+        text: "QUIT SESSION"
+        color: (0, 0, 0, 1)
+        background_color: (255, 255, 255, 1)
+        top: root.top - 10
+        center_x: root.width / 6
+        size: 120, 20

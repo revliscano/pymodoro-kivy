@@ -111,3 +111,7 @@ class SkipLapse(Button, Switchable):
 class Counter(Label):
     def update(self, count):
         self.text = str(count)
+
+
+class QuitSession(Button):
+    pass
