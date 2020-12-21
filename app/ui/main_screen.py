@@ -1,12 +1,22 @@
+from kivy.app import App
+from kivy.uix.screenmanager import Screen
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.properties import ObjectProperty, NumericProperty
 from kivy.clock import Clock
+
 from .seconds_formatter import SecondsFormatter
 
 
 EVERY_SECOND = 1
+
+
+class MainScreen(Screen):
+    def __init__(self, **kwargs):
+        root = kwargs.pop('root')
+        super().__init__(**kwargs)
+        self.add_widget(root)
 
 
 class Root(Widget):
@@ -114,4 +124,9 @@ class Counter(Label):
 
 
 class QuitSession(Button):
-    pass
+    def on_parent(self, obj, parent):
+        self.bind(on_press=self.quit_session)
+
+    def quit_session(self, event):
+        app = App.get_running_app()
+        app.switch_to_title_screen()
