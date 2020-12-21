@@ -24,13 +24,15 @@ class PymodoroApp(App):
 
     def switch_to_title_screen(self):
         self.screen_manager.switch_to(
-            TitleScreen(name='title_screen')
+            TitleScreen(name='title_screen'),
+            direction='right'
         )
 
     def switch_to_main_screen(self):
         root_widget = RootWidgetSetUp.prepare()
         self.screen_manager.switch_to(
-            MainScreen(name='main_screen', root=root_widget)
+            MainScreen(name='main_screen', root=root_widget),
+            direction='left'
         )
 
 
