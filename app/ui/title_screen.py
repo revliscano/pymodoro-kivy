@@ -1,4 +1,6 @@
 from kivy.uix.screenmanager import Screen
+from kivy.uix.textinput import TextInput
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.modalview import ModalView
 from kivy.uix.button import Button
 from kivy.app import App
@@ -28,3 +30,22 @@ class CustomSession(Button):
 
 class CustomSessionModal(ModalView):
     pass
+
+
+class ModalForm(BoxLayout):
+    def start_custom_session(self, event):
+        for child in self.children:
+            try:
+                print(child.name, child.value)
+            except AttributeError:
+                pass
+
+
+class ModalTextInput(TextInput):
+    def on_text(self, instance, value):
+        self.parent.value = value
+
+
+class ConfirmButton(Button):
+    def on_parent(self, obj, parent):
+        self.bind(on_press=self.parent.start_custom_session)
